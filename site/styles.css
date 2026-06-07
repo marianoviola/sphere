@@ -391,6 +391,10 @@ h1 {
 }
 
 .footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   width: min(100% - 2rem, var(--max));
   margin: 0 auto;
   padding: 2rem 0 2.4rem;
@@ -402,6 +406,17 @@ h1 {
 
 .footer p {
   margin: 0;
+}
+
+.footer a {
+  border-bottom: 1px solid rgba(247, 251, 255, 0.32);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.footer a:hover,
+.footer a:focus-visible {
+  color: var(--text);
+  border-color: var(--cyan);
 }
 
 @media (max-width: 820px) {
@@ -474,6 +489,11 @@ h1 {
   .field-key {
     gap: 0.7rem;
     font-size: 0.66rem;
+  }
+
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
