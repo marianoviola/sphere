@@ -70,7 +70,7 @@ Do not ask unknown visitors to send raw content as the first interaction.
 Safer first step:
 
 ```text
-Request ChatGPT access
+Request access
 ```
 
 or:
