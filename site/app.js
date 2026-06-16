@@ -1,19 +1,17 @@
 const canvas = document.querySelector("#sphere-field");
 const ctx = canvas.getContext("2d", { alpha: false });
 
-const palette = {
-  base: [244, 250, 255],
-  cyan: [120, 242, 255],
-  green: [180, 255, 204],
-  amber: [255, 212, 138],
-  rose: [255, 157, 179],
-};
+const TAU = Math.PI * 2;
+const WHITE = [236, 244, 255];
+const ACCENT = [120, 242, 255];
 
 let width = 0;
 let height = 0;
 let pixelRatio = 1;
 let spheres = [];
-let links = [];
+let stars = [];
+let fragments = [];
+let maxFragments = 20;
 let pointer = { x: 0, y: 0, active: false };
 let lastTime = performance.now();
 let reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -24,6 +22,14 @@ function rgba(rgb, alpha) {
 
 function random(min, max) {
   return min + Math.random() * (max - min);
+}
+
+function mix(a, b, t) {
+  return [
+    a[0] + (b[0] - a[0]) * t,
+    a[1] + (b[1] - a[1]) * t,
+    a[2] + (b[2] - a[2]) * t,
+  ];
 }
 
 function fitCanvas() {
@@ -39,194 +45,305 @@ function fitCanvas() {
 
 function createField() {
   const isSmall = width < 700;
-  const count = isSmall ? 11 : 18;
-  const minRadius = isSmall ? 28 : 38;
-  const maxRadius = isSmall ? 78 : 128;
+
+  fragments = [];
+  maxFragments = isSmall ? 10 : 20;
+
+  // Depth starfield: x/y normalised to [-1, 1], z is depth toward the viewer.
+  const starCount = isSmall ? 90 : 170;
+  stars = Array.from({ length: starCount }, () => ({
+    x: random(-1, 1),
+    y: random(-1, 1),
+    z: random(0.04, 1),
+  }));
+
+  // Wireframe globes drifting through a 2.5D space (Asteroids-style wrap).
+  const count = isSmall ? 7 : 11;
+  const minRadius = isSmall ? 30 : 44;
+  const maxRadius = isSmall ? 64 : 120;
   spheres = Array.from({ length: count }, (_, index) => {
-    const radius = random(minRadius, maxRadius);
+    const depth = random(0.34, 1);
+    const drift = 0.018 * (isSmall ? 0.8 : 1);
     return {
       id: index,
-      x: random(radius, width - radius),
-      y: random(radius, height - radius),
-      vx: random(-0.035, 0.035) * (isSmall ? 0.8 : 1),
-      vy: random(-0.03, 0.03) * (isSmall ? 0.8 : 1),
-      radius,
-      targetRadius: radius * random(0.84, 1.18),
-      phase: random(0, Math.PI * 2),
-      pulse: 0,
-      color: palette.base,
-      operation: "",
+      x: random(0, width),
+      y: random(0, height),
+      depth,
+      baseRadius: random(minRadius, maxRadius),
+      // Parallax: nearer globes (higher depth) drift faster.
+      vx: random(-drift, drift) * (0.5 + depth),
+      vy: random(-drift, drift) * (0.5 + depth),
+      spin: random(0, TAU),
+      spinSpeed: random(0.00012, 0.00032) * (random(0, 1) > 0.5 ? 1 : -1),
+      tilt: random(-0.5, 0.5),
+      glow: 0,
+      emitTimer: random(900, 4200),
+      sx: 0,
+      sy: 0,
+      r: 0,
     };
   });
-
-  links = [];
 }
 
-function setPulse(sphere, color, operation) {
-  sphere.pulse = Math.min(1, sphere.pulse + 0.075);
-  sphere.color = color;
-  sphere.operation = operation;
+// Irregular 3–6 vertex outline → reads as a shard, not a regular polygon.
+function makeShardVerts() {
+  const n = Math.floor(random(3, 6.99));
+  const verts = [];
+  for (let i = 0; i < n; i += 1) {
+    verts.push({
+      a: (i / n) * TAU + random(-0.28, 0.28),
+      rr: random(0.52, 1),
+    });
+  }
+  return verts;
 }
 
-function updateSphere(sphere, delta) {
-  const speed = reducedMotion ? 0.12 : 1;
-  sphere.phase += delta * 0.00018 * speed;
-  sphere.x += sphere.vx * delta * speed;
-  sphere.y += sphere.vy * delta * speed;
-  sphere.targetRadius += Math.sin(sphere.phase) * 0.012 * delta * speed;
-  sphere.radius += (sphere.targetRadius - sphere.radius) * 0.003 * delta;
-  sphere.pulse *= Math.pow(0.985, delta / 16.67);
-
-  if (sphere.radius < 26) sphere.targetRadius = random(44, 92);
-  if (sphere.radius > Math.min(width, height) * 0.28) sphere.targetRadius *= 0.82;
-
-  if (sphere.x < sphere.radius || sphere.x > width - sphere.radius) {
-    sphere.vx *= -1;
-    sphere.x = Math.max(sphere.radius, Math.min(width - sphere.radius, sphere.x));
-    setPulse(sphere, palette.cyan, "boundary");
-  }
-
-  if (sphere.y < sphere.radius || sphere.y > height - sphere.radius) {
-    sphere.vy *= -1;
-    sphere.y = Math.max(sphere.radius, Math.min(height - sphere.radius, sphere.y));
-    setPulse(sphere, palette.green, "boundary");
-  }
-
-  if (pointer.active) {
-    const dx = sphere.x - pointer.x;
-    const dy = sphere.y - pointer.y;
-    const distance = Math.hypot(dx, dy);
-    const reach = sphere.radius + 120;
-    if (distance < reach && distance > 0.001) {
-      const force = (1 - distance / reach) * 0.00016 * delta;
-      sphere.vx += (dx / distance) * force;
-      sphere.vy += (dy / distance) * force;
-      setPulse(sphere, palette.rose, "mutation");
-    }
-  }
-
-  const velocity = Math.hypot(sphere.vx, sphere.vy);
-  if (velocity > 0.07) {
-    sphere.vx *= 0.98;
-    sphere.vy *= 0.98;
-  }
+function spawnFragment(sphere) {
+  const isShard = Math.random() < 0.62;
+  const angle = random(0, TAU);
+  const dist = random(0, sphere.r * 0.55);
+  const drift = random(0.004, 0.014);
+  const heading = random(0, TAU);
+  fragments.push({
+    kind: isShard ? "shard" : "mote",
+    parent: sphere,
+    depth: sphere.depth,
+    // Local position/velocity, relative to the parent globe's centre.
+    lx: Math.cos(angle) * dist,
+    ly: Math.sin(angle) * dist,
+    lvx: Math.cos(heading) * drift,
+    lvy: Math.sin(heading) * drift,
+    spin: random(0, TAU),
+    spinSpeed: random(0.0002, 0.0006) * (Math.random() > 0.5 ? 1 : -1),
+    size: isShard ? random(5, 11) * sphere.depth : random(0.8, 1.7),
+    verts: isShard ? makeShardVerts() : null,
+    age: 0,
+    life: isShard ? random(7000, 13000) : random(4500, 9000),
+  });
 }
 
-function resolveCollisions() {
-  links = [];
-  for (let i = 0; i < spheres.length; i += 1) {
-    for (let j = i + 1; j < spheres.length; j += 1) {
-      const a = spheres[i];
-      const b = spheres[j];
-      const dx = b.x - a.x;
-      const dy = b.y - a.y;
-      const distance = Math.hypot(dx, dy);
-      const overlap = a.radius + b.radius - distance;
-      const near = distance < (a.radius + b.radius) * 1.28;
+// Fade in, hold, fade out across the fragment's lifetime.
+function lifeEnvelope(frag) {
+  const f = frag.age / frag.life;
+  if (f < 0.18) return f / 0.18;
+  if (f > 0.7) return Math.max(0, (1 - f) / 0.3);
+  return 1;
+}
 
-      if (near) {
-        links.push({ a, b, overlap: Math.max(0, overlap), distance });
-      }
+function updateFragment(frag, delta) {
+  const speed = reducedMotion ? 0.18 : 1;
+  frag.age += delta;
+  frag.lx += frag.lvx * delta * speed;
+  frag.ly += frag.lvy * delta * speed;
+  frag.spin += frag.spinSpeed * delta * speed;
 
-      if (overlap > 0 && distance > 0.001) {
-        const nx = dx / distance;
-        const ny = dy / distance;
-        const push = overlap * 0.0015;
-        a.vx -= nx * push;
-        a.vy -= ny * push;
-        b.vx += nx * push;
-        b.vy += ny * push;
-        a.targetRadius *= 0.9992;
-        b.targetRadius *= 1.0006;
-        setPulse(a, palette.amber, "intersection");
-        setPulse(b, palette.amber, "union");
-      }
-    }
+  // Contained within the parent globe — bounce softly off its inner wall.
+  const bound = frag.parent.r * 0.82 - frag.size;
+  const d = Math.hypot(frag.lx, frag.ly);
+  if (bound > 0 && d > bound) {
+    const nx = frag.lx / d;
+    const ny = frag.ly / d;
+    frag.lx = nx * bound;
+    frag.ly = ny * bound;
+    const dot = frag.lvx * nx + frag.lvy * ny;
+    frag.lvx -= 2 * dot * nx;
+    frag.lvy -= 2 * dot * ny;
   }
 }
 
-function drawStars(time) {
-  ctx.fillStyle = "#02050b";
-  ctx.fillRect(0, 0, width, height);
-
-  const spacing = width < 700 ? 58 : 72;
-  ctx.save();
-  ctx.globalAlpha = 0.26;
-  ctx.strokeStyle = "rgba(244, 250, 255, 0.07)";
-  ctx.lineWidth = 1;
-  for (let x = ((time * 0.002) % spacing) - spacing; x < width + spacing; x += spacing) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x + height * 0.18, height);
-    ctx.stroke();
-  }
-  for (let y = ((time * 0.0015) % spacing) - spacing; y < height + spacing; y += spacing) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(width, y + width * 0.08);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
-function drawLinks() {
-  for (const link of links) {
-    const alpha = link.overlap > 0 ? 0.42 : 0.12;
-    const color = link.overlap > 0 ? palette.amber : palette.base;
-    ctx.beginPath();
-    ctx.moveTo(link.a.x, link.a.y);
-    ctx.lineTo(link.b.x, link.b.y);
-    ctx.strokeStyle = rgba(color, alpha);
-    ctx.lineWidth = link.overlap > 0 ? 1.2 : 0.7;
-    ctx.stroke();
-
-    if (link.overlap > 0) {
-      const mx = (link.a.x + link.b.x) / 2;
-      const my = (link.a.y + link.b.y) / 2;
-      const lens = Math.min(link.overlap * 0.28, 28);
+// Faint links between fragments sharing a globe → an internal constellation.
+function drawFragmentRelations() {
+  for (let i = 0; i < fragments.length; i += 1) {
+    for (let j = i + 1; j < fragments.length; j += 1) {
+      const a = fragments[i];
+      const b = fragments[j];
+      if (a.parent !== b.parent) continue;
+      const ea = lifeEnvelope(a);
+      const eb = lifeEnvelope(b);
+      if (ea <= 0 || eb <= 0) continue;
+      const d = Math.hypot(b.lx - a.lx, b.ly - a.ly);
+      const reach = a.parent.r * 0.9;
+      if (d > reach) continue;
+      const alpha = (1 - d / reach) * 0.16 * (0.4 + a.depth) * Math.min(ea, eb);
       ctx.beginPath();
-      ctx.ellipse(mx, my, lens * 1.8, lens, Math.atan2(link.b.y - link.a.y, link.b.x - link.a.x), 0, Math.PI * 2);
-      ctx.strokeStyle = rgba(palette.amber, 0.55);
-      ctx.lineWidth = 1;
+      ctx.moveTo(a.parent.sx + a.lx, a.parent.sy + a.ly);
+      ctx.lineTo(b.parent.sx + b.lx, b.parent.sy + b.ly);
+      ctx.strokeStyle = rgba(WHITE, alpha);
+      ctx.lineWidth = 0.5;
       ctx.stroke();
     }
   }
 }
 
-function drawSphere(sphere, time) {
-  const pulse = Math.min(1, sphere.pulse);
-  const color = pulse > 0.02 ? sphere.color : palette.base;
-  const alpha = 0.46 + pulse * 0.42;
-  const wobble = Math.sin(time * 0.0012 + sphere.phase) * 1.8;
-  const radius = sphere.radius + wobble;
+function drawFragment(frag) {
+  const env = lifeEnvelope(frag);
+  if (env <= 0) return;
+
+  const ax = frag.parent.sx + frag.lx;
+  const ay = frag.parent.sy + frag.ly;
+
+  if (frag.kind === "mote") {
+    const alpha = (0.1 + frag.depth * 0.3) * env;
+    ctx.beginPath();
+    ctx.arc(ax, ay, frag.size, 0, TAU);
+    ctx.fillStyle = rgba(WHITE, alpha);
+    ctx.fill();
+    return;
+  }
+
+  const alpha = (0.16 + frag.depth * 0.4) * env;
+  ctx.save();
+  ctx.translate(ax, ay);
+  ctx.beginPath();
+  frag.verts.forEach((v, i) => {
+    const px = Math.cos(v.a + frag.spin) * frag.size * v.rr;
+    const py = Math.sin(v.a + frag.spin) * frag.size * v.rr;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  });
+  ctx.closePath();
+  ctx.strokeStyle = rgba(WHITE, alpha);
+  ctx.lineWidth = 0.5 + frag.depth * 0.6;
+  ctx.stroke();
+  ctx.restore();
+}
+
+function updateStars(delta) {
+  const speed = (reducedMotion ? 0.1 : 1) * 0.000016 * delta;
+  for (const star of stars) {
+    star.z -= speed;
+    if (star.z <= 0.03) {
+      star.z = 1;
+      star.x = random(-1, 1);
+      star.y = random(-1, 1);
+    }
+  }
+}
+
+function updateSphere(sphere, delta) {
+  const speed = reducedMotion ? 0.14 : 1;
+  sphere.spin += sphere.spinSpeed * delta * speed * (0.4 + sphere.depth);
+  sphere.x += sphere.vx * delta * speed;
+  sphere.y += sphere.vy * delta * speed;
+  sphere.glow *= Math.pow(0.94, delta / 16.67);
+
+  sphere.r = sphere.baseRadius * sphere.depth;
+  sphere.sx = sphere.x;
+  sphere.sy = sphere.y;
+
+  // Toroidal wrap: leave one edge, re-enter from the opposite one.
+  const margin = sphere.r + 4;
+  if (sphere.x < -margin) sphere.x = width + margin;
+  if (sphere.x > width + margin) sphere.x = -margin;
+  if (sphere.y < -margin) sphere.y = height + margin;
+  if (sphere.y > height + margin) sphere.y = -margin;
+
+  if (pointer.active) {
+    const dx = sphere.sx - pointer.x;
+    const dy = sphere.sy - pointer.y;
+    const distance = Math.hypot(dx, dy);
+    const reach = sphere.r + 130;
+    if (distance < reach && distance > 0.001) {
+      const force = (1 - distance / reach) * 0.00012 * delta;
+      sphere.vx += (dx / distance) * force;
+      sphere.vy += (dy / distance) * force;
+      sphere.glow = Math.min(1, sphere.glow + 0.05);
+    }
+  }
+
+  // Keep the globe populated: refill fragments up to its capacity.
+  sphere.emitTimer -= delta;
+  if (sphere.emitTimer <= 0) {
+    const capacity = 1 + Math.round(sphere.depth * 2.5);
+    let count = 0;
+    for (const frag of fragments) {
+      if (frag.parent === sphere) count += 1;
+    }
+    if (count < capacity && fragments.length < maxFragments) spawnFragment(sphere);
+    sphere.emitTimer = random(1200, 3200) * (reducedMotion ? 2.4 : 1);
+  }
+}
+
+function drawStars() {
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(0, 0, width, height);
+
+  const cx = width / 2;
+  const cy = height / 2;
+  const spread = Math.max(width, height) * 0.62;
+
+  for (const star of stars) {
+    const k = 1 / star.z;
+    const sx = cx + star.x * k * spread;
+    const sy = cy + star.y * k * spread;
+    if (sx < -4 || sx > width + 4 || sy < -4 || sy > height + 4) continue;
+    const near = 1 - star.z;
+    const size = Math.max(0.4, near * 1.7);
+    const alpha = Math.min(0.7, 0.12 + near * 0.6);
+    ctx.beginPath();
+    ctx.arc(sx, sy, size, 0, TAU);
+    ctx.fillStyle = rgba(WHITE, alpha);
+    ctx.fill();
+  }
+}
+
+function drawRelations() {
+  for (let i = 0; i < spheres.length; i += 1) {
+    for (let j = i + 1; j < spheres.length; j += 1) {
+      const a = spheres[i];
+      const b = spheres[j];
+      const dx = b.sx - a.sx;
+      const dy = b.sy - a.sy;
+      const distance = Math.hypot(dx, dy);
+      const reach = (a.r + b.r) * 1.9 + 90;
+      if (distance > reach) continue;
+      const closeness = 1 - distance / reach;
+      const depth = Math.min(a.depth, b.depth);
+      const alpha = closeness * 0.22 * (0.4 + depth);
+      ctx.beginPath();
+      ctx.moveTo(a.sx, a.sy);
+      ctx.lineTo(b.sx, b.sy);
+      ctx.strokeStyle = rgba(WHITE, alpha);
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
+    }
+  }
+}
+
+function drawSphere(sphere) {
+  const r = sphere.r;
+  const glow = Math.min(1, sphere.glow);
+  const color = glow > 0.02 ? mix(WHITE, ACCENT, glow) : WHITE;
+  const alpha = 0.2 + sphere.depth * 0.5 + glow * 0.2;
 
   ctx.save();
-  ctx.translate(sphere.x, sphere.y);
+  ctx.translate(sphere.sx, sphere.sy);
+  ctx.lineWidth = 0.6 + sphere.depth * 0.7;
 
+  // Silhouette.
   ctx.beginPath();
-  ctx.arc(0, 0, radius, 0, Math.PI * 2);
+  ctx.arc(0, 0, r, 0, TAU);
   ctx.strokeStyle = rgba(color, alpha);
-  ctx.lineWidth = 1 + pulse * 0.9;
   ctx.stroke();
 
+  // Equator ring (tilted) — reads as a globe rather than a flat disc.
   ctx.beginPath();
-  ctx.arc(0, 0, radius * 0.64, 0, Math.PI * 2);
-  ctx.strokeStyle = rgba(color, 0.13 + pulse * 0.16);
-  ctx.lineWidth = 0.8;
+  ctx.ellipse(0, 0, r, r * 0.3, sphere.tilt, 0, TAU);
+  ctx.strokeStyle = rgba(color, alpha * 0.5);
   ctx.stroke();
 
+  // Two meridians whose width oscillates with spin → rotation illusion.
+  const m1 = Math.abs(Math.cos(sphere.spin));
   ctx.beginPath();
-  ctx.ellipse(0, 0, radius, radius * 0.36, sphere.phase * 0.32, 0, Math.PI * 2);
-  ctx.strokeStyle = rgba(color, 0.15 + pulse * 0.24);
-  ctx.lineWidth = 0.8;
+  ctx.ellipse(0, 0, r * m1, r, sphere.tilt, 0, TAU);
+  ctx.strokeStyle = rgba(color, alpha * 0.42);
   ctx.stroke();
 
-  if (pulse > 0.18 && sphere.operation) {
-    ctx.font = "500 10px Quicksand, sans-serif";
-    ctx.fillStyle = rgba(color, Math.min(0.9, pulse + 0.15));
-    ctx.textAlign = "center";
-    ctx.fillText(sphere.operation, 0, -radius - 10);
-  }
+  const m2 = Math.abs(Math.cos(sphere.spin + Math.PI / 2));
+  ctx.beginPath();
+  ctx.ellipse(0, 0, r * m2, r, sphere.tilt, 0, TAU);
+  ctx.strokeStyle = rgba(color, alpha * 0.24);
+  ctx.stroke();
 
   ctx.restore();
 }
@@ -235,15 +352,26 @@ function animate(now) {
   const delta = Math.min(34, now - lastTime);
   lastTime = now;
 
+  updateStars(delta);
   for (const sphere of spheres) {
     updateSphere(sphere, delta);
   }
-  resolveCollisions();
+  for (const frag of fragments) {
+    updateFragment(frag, delta);
+  }
+  fragments = fragments.filter((frag) => frag.age < frag.life);
 
-  drawStars(now);
-  drawLinks();
-  for (const sphere of spheres) {
-    drawSphere(sphere, now);
+  drawStars();
+  drawRelations();
+  // Far globes first so nearer ones overlap them.
+  const ordered = spheres.slice().sort((a, b) => a.depth - b.depth);
+  for (const sphere of ordered) {
+    drawSphere(sphere);
+  }
+  // Fragments live inside their globe, drawn over its wireframe.
+  drawFragmentRelations();
+  for (const frag of fragments) {
+    drawFragment(frag);
   }
 
   requestAnimationFrame(animate);
