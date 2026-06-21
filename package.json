@@ -1,0 +1,17 @@
+{
+  "name": "sphere-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The public Sphere website: landing page plus published documentation and theory.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.7.0"
+  }
+}

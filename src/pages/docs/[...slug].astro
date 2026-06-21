@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Nav from "../../components/Nav.astro";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs");
+  return docs.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const statusLabel: Record<string, string> = {
+  shipped: "shipped",
+  mixed: "shipped + vision",
+  vision: "vision",
+};
+---
+
+<Base
+  title={`${entry.data.title} - Sphere docs`}
+  description={entry.data.description}
+  ogTitle={`${entry.data.title} - Sphere docs`}
+  ogType="article"
+  path={`/docs/${entry.id}/`}
+>
+  <Nav variant="page" />
+
+  <main class="doc-prose">
+    <a class="doc-back" href="/docs">&larr; All docs</a>
+    <p><span class={`badge badge-${entry.data.status}`}>{statusLabel[entry.data.status]}</span></p>
+    {entry.data.note && <p class="doc-note">{entry.data.note}</p>}
+    <Content />
+  </main>
+</Base>

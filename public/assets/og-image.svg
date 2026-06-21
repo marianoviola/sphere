@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Sphere - Prepare your public knowledge for AI agents">
+  <defs>
+    <radialGradient id="glow" cx="70%" cy="32%" r="72%">
+      <stop offset="0%" stop-color="#183650"/>
+      <stop offset="48%" stop-color="#07111e"/>
+      <stop offset="100%" stop-color="#02050b"/>
+    </radialGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="#02050b"/>
+  <rect width="1200" height="630" fill="url(#glow)" opacity=".9"/>
+  <g opacity=".16" stroke="#f7fbff" stroke-width="1">
+    <path d="M0 84h1200M0 168h1200M0 252h1200M0 336h1200M0 420h1200M0 504h1200"/>
+    <path d="M88 0v630M176 0v630M264 0v630M352 0v630M440 0v630M528 0v630M616 0v630M704 0v630M792 0v630M880 0v630M968 0v630M1056 0v630"/>
+  </g>
+  <g fill="none" stroke-linecap="round">
+    <circle cx="930" cy="190" r="135" stroke="#ffd48a" stroke-width="2.5" opacity=".78"/>
+    <ellipse cx="930" cy="190" rx="135" ry="44" stroke="#f7fbff" stroke-width="1.1" opacity=".23" transform="rotate(-18 930 190)"/>
+    <ellipse cx="930" cy="190" rx="55" ry="135" stroke="#78f2ff" stroke-width="1.2" opacity=".22" transform="rotate(24 930 190)"/>
+    <circle cx="760" cy="392" r="118" stroke="#f7fbff" stroke-width="1.5" opacity=".36"/>
+    <ellipse cx="760" cy="392" rx="118" ry="39" stroke="#ffd48a" stroke-width="1" opacity=".32" transform="rotate(28 760 392)"/>
+    <circle cx="1060" cy="438" r="72" stroke="#b4ffcc" stroke-width="1.6" opacity=".58"/>
+    <circle cx="668" cy="168" r="64" stroke="#78f2ff" stroke-width="1.4" opacity=".48"/>
+    <circle cx="1014" cy="318" r="34" stroke="#ffd48a" stroke-width="1.4" opacity=".72"/>
+    <path d="M668 168 760 392 930 190 1060 438" stroke="#f7fbff" stroke-width="1" opacity=".25"/>
+    <path d="M760 392 1014 318" stroke="#ffd48a" stroke-width="1.2" opacity=".42"/>
+  </g>
+  <g filter="url(#soft)" opacity=".22">
+    <circle cx="1014" cy="318" r="38" fill="#ffd48a"/>
+    <circle cx="668" cy="168" r="42" fill="#78f2ff"/>
+  </g>
+  <g font-family="Quicksand, Avenir Next, Century Gothic, sans-serif" letter-spacing="0">
+    <text x="76" y="94" fill="#78f2ff" font-size="24" font-weight="500">OPEN INFRASTRUCTURE FOR AGENT-READABLE PUBLISHING</text>
+    <text x="68" y="304" fill="#f7fbff" font-size="154" font-weight="300">Sphere</text>
+    <text x="78" y="374" fill="#d4dde7" font-size="33" font-weight="300">Prepare your public knowledge for AI agents.</text>
+    <text x="78" y="428" fill="#a8b7c4" font-size="25" font-weight="300">Licensed, provenance-aware fragments you validate locally</text>
+    <text x="78" y="466" fill="#a8b7c4" font-size="25" font-weight="300">and publish to a node you run yourself.</text>
+    <text x="78" y="554" fill="#f7fbff" font-size="22" font-weight="400">sphere.pub</text>
+    <circle cx="50" cy="547" r="13" fill="none" stroke="#f7fbff" stroke-width="1.5"/>
+    <ellipse cx="50" cy="547" rx="13" ry="4.6" fill="none" stroke="#78f2ff" stroke-width="1"/>
+  </g>
+</svg>

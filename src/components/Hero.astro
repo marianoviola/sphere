@@ -1,0 +1,41 @@
+---
+import Nav from "./Nav.astro";
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <canvas id="sphere-field" aria-hidden="true"></canvas>
+
+  <Nav variant="hero" />
+
+  <div class="hero-copy">
+    <p class="eyebrow">Open infrastructure for agent-readable publishing</p>
+    <h1 id="hero-title">Sphere</h1>
+    <p class="lede">
+      Prepare your public knowledge for AI agents. Sphere turns articles,
+      documents, datasets, and media into licensed, provenance-aware fragments
+      that you validate locally and publish to a node you run yourself. Open and
+      self-hostable, not a gated service.
+    </p>
+    <div class="hero-actions" aria-label="Calls to action">
+      <a class="primary-action" href="https://github.com/marianoviola/sphere-node">
+        Deploy your Node
+      </a>
+      <a class="secondary-action" href="https://github.com/marianoviola/sphere-plugin">
+        Get the plugin
+      </a>
+      <a class="secondary-action" href="/docs">Read the docs</a>
+    </div>
+    <!-- TODO: replace "#" with the announcement blog post URL once published. -->
+    <p class="hero-note"><a href="#">Read the announcement</a></p>
+  </div>
+
+  <aside class="field-key" aria-label="Simulation legend">
+    <span><i class="dot dot-stable"></i>fragment</span>
+    <span><i class="dot dot-change"></i>relation</span>
+    <span><i class="dot dot-collide"></i>depth</span>
+  </aside>
+</section>
+
+<!-- Canvas animation carried over verbatim from the original site (app.js).
+     Loaded only here, where #sphere-field exists. It respects prefers-reduced-motion. -->
+<script is:inline src="/scripts/sphere-field.js" defer></script>
