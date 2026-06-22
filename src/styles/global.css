@@ -7,7 +7,7 @@
   --faint: rgba(238, 247, 255, 0.16);
   --cyan: #78f2ff;
   --max: 1180px;
-  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
   --font-text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
