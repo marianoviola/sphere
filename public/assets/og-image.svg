@@ -45,6 +45,6 @@
   <g>
     <circle cx="86" cy="556" r="13" fill="none" stroke="#f7fbff" stroke-width="2"/>
     <ellipse cx="86" cy="556" rx="13" ry="4.4" fill="none" stroke="#78f2ff" stroke-width="1.4"/>
-    <text x="116" y="567" fill="#f7fbff" font-family="IBM Plex Mono, SFMono-Regular, ui-monospace, Menlo, monospace" font-size="40" font-weight="500" letter-spacing="-1">Sphere</text>
+    <text x="116" y="567" fill="#f7fbff" font-family="Space Grotesk, Inter, system-ui, sans-serif" font-size="40" font-weight="500" letter-spacing="-1">Sphere</text>
   </g>
 </svg>

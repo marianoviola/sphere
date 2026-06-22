@@ -7,8 +7,9 @@
   --faint: rgba(238, 247, 255, 0.16);
   --cyan: #78f2ff;
   --max: 1180px;
-  --font-display: "IBM Plex Mono", "SFMono-Regular", ui-monospace, Menlo, monospace;
-  --font-text: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
 * {
@@ -28,7 +29,7 @@ body {
     linear-gradient(180deg, #02050b 0%, #050911 62%, #07101b 100%);
   color: var(--text);
   font-family: var(--font-text);
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
@@ -152,7 +153,7 @@ h1 {
   font-size: clamp(4.8rem, 17vw, 13rem);
   line-height: 1.04;
   font-weight: 300;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
 }
 
 .lede {
@@ -283,7 +284,7 @@ h1 {
   font-size: clamp(2.1rem, 5vw, 5rem);
   line-height: 1.06;
   font-weight: 300;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 .report-grid {
@@ -697,7 +698,7 @@ h1 {
 }
 
 .doc-prose code {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-size: 0.86em;
   background: rgba(255, 255, 255, 0.05);
   padding: 0.1rem 0.34rem;
