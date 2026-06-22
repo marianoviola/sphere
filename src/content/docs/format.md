@@ -1,8 +1,9 @@
 ---
 title: Fragment Format
 description: Fragment structure, content conventions, and metadata hierarchy. The manifest schema is canonical in sphere-node.
+summary: How a fragment is structured and where the canonical manifest schema lives.
 status: mixed
-order: 2
+order: 3
 note: The fragment manifest is defined canonically in the sphere-node repo (spec/fragment.schema.json); this document points to it rather than restating it. Other parts describe conventions and future hierarchy concepts.
 ---
 

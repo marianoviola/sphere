@@ -1,6 +1,7 @@
 ---
 title: Infrastructure
 description: "The Cloudflare stack behind a Sphere Node: Workers, R2, D1, KV, and the content pipeline."
+summary: "The Cloudflare stack behind a Sphere Node: Workers, R2, D1, and KV."
 status: shipped
 order: 8
 note: This describes the shipped v1 Sphere Node on Cloudflare Workers, D1, R2, and KV. Cloudflare is the only v1 deployment target.

@@ -1,8 +1,9 @@
 ---
 title: Payment Flow
 description: The intended MPP / PaymentAuth flow, Sphere token fallback, and x402 compatibility.
+summary: The intended 402 payment challenge, token fallback, and x402 compatibility.
 status: vision
-order: 4
+order: 5
 note: Sphere does not process payments in v1. The Node returns a 402 payment challenge but does not verify it. The flows below describe intended future behavior.
 ---
 

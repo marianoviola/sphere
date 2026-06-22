@@ -1,8 +1,9 @@
 ---
 title: Monetization
 description: The intended revenue model, pricing tiers, publisher payout, and contributor attribution.
+summary: The intended revenue model, pricing, payout, and contributor attribution.
 status: vision
-order: 5
+order: 9
 note: Monetization is not live in v1. This document describes the intended revenue model and direction, not current functionality.
 ---
 

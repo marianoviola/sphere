@@ -1,6 +1,7 @@
 ---
 title: Publisher Intelligence
 description: How publishers understand readiness, usage, revenue, and analytics for their fragments.
+summary: Readiness, usage, and analytics - local reports today, richer intelligence later.
 status: vision
 order: 6
 note: v1 ships local readiness reports and read-only owner endpoints on your own Node. The simulation, revenue intelligence, and analytics described here are direction, not shipped features.

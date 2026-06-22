@@ -34,11 +34,18 @@ function mix(a, b, t) {
 
 function fitCanvas() {
   const rect = canvas.getBoundingClientRect();
+  const w = Math.floor(rect.width);
+  const h = Math.floor(rect.height);
+  // Layout/fonts may not be settled on first run; bail until the element has a
+  // real size. The ResizeObserver below calls back once it does.
+  if (w < 1 || h < 1) return;
   pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-  width = Math.max(1, Math.floor(rect.width));
-  height = Math.max(1, Math.floor(rect.height));
-  canvas.width = Math.floor(width * pixelRatio);
-  canvas.height = Math.floor(height * pixelRatio);
+  width = w;
+  height = h;
+  // Back the canvas with device pixels for the *measured* CSS size, then draw
+  // in CSS units — crisp on HiDPI, never upscaled/grainy or stretched.
+  canvas.width = Math.round(width * pixelRatio);
+  canvas.height = Math.round(height * pixelRatio);
   ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   createField();
 }
@@ -384,7 +391,17 @@ function updatePointer(event) {
   pointer.active = true;
 }
 
-window.addEventListener("resize", fitCanvas);
+// Coalesce refit requests to one per frame.
+let fitScheduled = false;
+function scheduleFit() {
+  if (fitScheduled) return;
+  fitScheduled = true;
+  requestAnimationFrame(() => {
+    fitScheduled = false;
+    fitCanvas();
+  });
+}
+
 window.addEventListener("pointermove", updatePointer);
 window.addEventListener("pointerleave", () => {
   pointer.active = false;
@@ -393,6 +410,15 @@ window.addEventListener("pointerleave", () => {
 window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", (event) => {
   reducedMotion = event.matches;
 });
+
+// Re-fit whenever the canvas actually changes size — this corrects a wrong
+// first measurement once layout/fonts settle, and handles rotation/resize —
+// instead of relying on a single load-time read of getBoundingClientRect.
+if (typeof ResizeObserver !== "undefined") {
+  new ResizeObserver(scheduleFit).observe(canvas);
+} else {
+  window.addEventListener("resize", scheduleFit);
+}
 
 fitCanvas();
 requestAnimationFrame(animate);

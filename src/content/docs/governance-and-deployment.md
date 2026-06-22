@@ -1,6 +1,7 @@
 ---
 title: Governance and Deployment
 description: Protocol separation, publisher-owned nodes, roles, responsibilities, and optional services.
+summary: Protocol separation, publisher-owned nodes, roles, and optional services.
 status: mixed
 order: 7
 note: v1 deploys as a self-hosted Sphere Node on Cloudflare. The managed services and hosted sandbox described here are future direction, not current offerings.

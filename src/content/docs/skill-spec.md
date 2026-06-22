@@ -1,8 +1,9 @@
 ---
 title: Sphere Fragment Authoring Skill
 description: An earlier Agent Skill specification for fragment authoring, validation, and publishing.
+summary: An earlier Agent Skill spec, now superseded by the plugin.
 status: vision
-order: 10
+order: 11
 note: This specifies an earlier Agent Skill design, now superseded by the sphere-plugin. Its payment, Stripe, and monetization references are not shipped.
 ---
 

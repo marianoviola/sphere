@@ -22,6 +22,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at 50% 0%, rgba(40, 78, 120, 0.25), transparent 42rem),
     linear-gradient(180deg, #02050b 0%, #050911 62%, #07101b 100%);
@@ -484,6 +485,18 @@ h1 {
   .metric {
     margin-bottom: 2.5rem;
   }
+
+  /* Cap the hero/canvas height so it does not run away on tall viewports. */
+  .hero {
+    max-height: 820px;
+  }
+
+  /* Comfortable tap targets for the wrapped nav. */
+  .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -512,6 +525,21 @@ h1 {
   .footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  /* Stack prev/next so neither gets clipped on narrow screens. */
+  .doc-pager {
+    flex-direction: column;
+  }
+
+  .doc-pager-link {
+    max-width: 100%;
+  }
+
+  .doc-pager-next {
+    margin-left: 0;
+    text-align: left;
+    align-items: flex-start;
   }
 }
 
@@ -706,6 +734,50 @@ h1 {
   font-family: var(--font-text);
   font-size: 0.96rem;
   line-height: 1.55;
+}
+
+/* Prev/next navigation following the docs reading order. */
+.doc-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: clamp(3rem, 7vw, 5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--faint);
+}
+
+.doc-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-width: 48%;
+}
+
+.doc-pager-next {
+  margin-left: auto;
+  text-align: right;
+  align-items: flex-end;
+}
+
+.doc-pager-dir {
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cyan);
+}
+
+.doc-pager-title {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  color: var(--muted);
+  transition: color 180ms ease;
+}
+
+.doc-pager-link:hover .doc-pager-title,
+.doc-pager-link:focus-visible .doc-pager-title {
+  color: var(--text);
 }
 
 .badge-shipped {

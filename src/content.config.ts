@@ -9,6 +9,8 @@ const docs = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    // One-line summary shown in the docs index reading order.
+    summary: z.string(),
     status: z.enum(["shipped", "mixed", "vision"]),
     order: z.number(),
     note: z.string().optional(),

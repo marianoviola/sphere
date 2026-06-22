@@ -1,8 +1,9 @@
 ---
 title: Product Page
 description: Public-facing positioning and the structure of the first Sphere page.
+summary: Public-facing positioning and the structure of the first Sphere page.
 status: mixed
-order: 11
+order: 12
 note: Positioning notes. Some capabilities described here are shipped (the self-hostable Node and the local plugin); others are future direction.
 ---
 

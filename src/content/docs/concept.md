@@ -1,8 +1,9 @@
 ---
 title: Concept
 description: Why Sphere exists, the public sphere problem, fragments as relational units, and the revenue-model vision.
+summary: Why Sphere exists, fragments as relational units, and the long-term vision.
 status: vision
-order: 1
+order: 2
 note: This document describes the concept and direction behind Sphere, including a future revenue model. It is not a description of shipped v1 features.
 ---
 

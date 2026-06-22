@@ -1,7 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sphere">
-  <rect width="64" height="64" rx="12" fill="#02050b"/>
-  <circle cx="32" cy="32" r="21" fill="none" stroke="#f7fbff" stroke-width="2"/>
-  <ellipse cx="32" cy="32" rx="21" ry="7.5" fill="none" stroke="#78f2ff" stroke-width="1.5" opacity=".86"/>
-  <ellipse cx="32" cy="32" rx="8" ry="21" fill="none" stroke="#ffd48a" stroke-width="1.5" opacity=".72" transform="rotate(30 32 32)"/>
-  <circle cx="45.5" cy="20.5" r="2.4" fill="#b4ffcc"/>
+  <rect width="64" height="64" rx="13" fill="#02050b"/>
+  <circle cx="32" cy="32" r="20" fill="none" stroke="#f7fbff" stroke-width="3"/>
+  <ellipse cx="32" cy="32" rx="20" ry="7" fill="none" stroke="#78f2ff" stroke-width="2.4"/>
 </svg>

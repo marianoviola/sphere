@@ -1,8 +1,9 @@
 ---
 title: Roadmap
 description: Current state and the planned phases beyond v1.
+summary: What ships today and the planned phases beyond v1.
 status: vision
-order: 9
+order: 10
 note: Only the earliest items here are shipped (the self-hostable Node and the local plugin). Later phases are planned direction, not current functionality.
 ---
 

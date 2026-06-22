@@ -1,5 +1,8 @@
 ---
 import Nav from "./Nav.astro";
+import { siteConfig } from "../config.ts";
+
+const { announcementUrl } = siteConfig;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -17,16 +20,19 @@ import Nav from "./Nav.astro";
       self-hostable, not a gated service.
     </p>
     <div class="hero-actions" aria-label="Calls to action">
-      <a class="primary-action" href="https://github.com/marianoviola/sphere-node">
+      <a class="primary-action" href="/docs/getting-started">Get started</a>
+      <a class="secondary-action" href="https://github.com/marianoviola/sphere-node">
         Deploy your Node
-      </a>
-      <a class="secondary-action" href="https://github.com/marianoviola/sphere-plugin">
-        Get the plugin
       </a>
       <a class="secondary-action" href="/docs">Read the docs</a>
     </div>
-    <!-- TODO: replace "#" with the announcement blog post URL once published. -->
-    <p class="hero-note"><a href="#">Read the announcement</a></p>
+    {
+      announcementUrl && (
+        <p class="hero-note">
+          <a href={announcementUrl}>Read the announcement</a>
+        </p>
+      )
+    }
   </div>
 
   <aside class="field-key" aria-label="Simulation legend">

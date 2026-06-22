@@ -31,9 +31,9 @@ const statusLabel: Record<string, string> = {
         the plugin validates, scores, and scaffolds fragments locally. Everything
         else in these documents - managed services, payment coordination, revenue
         attribution, a registry, a hosted sandbox - describes the broader concept
-        and direction, not current services. Each document is labeled
-        <span class="badge badge-shipped">shipped</span>,
-        <span class="badge badge-mixed">shipped + vision</span>, or
+        and direction, not current services. Each document is labeled{" "}
+        <span class="badge badge-shipped">shipped</span>,{" "}
+        <span class="badge badge-mixed">shipped + vision</span>, or{" "}
         <span class="badge badge-vision">vision</span>.
       </p>
 
@@ -43,10 +43,10 @@ const statusLabel: Record<string, string> = {
             <li>
               <a href={`/docs/${doc.id}/`}>
                 <h3>
-                  {doc.data.title}
+                  <span class="docs-list-title">{doc.data.title}</span>
                   <span class={`badge badge-${doc.data.status}`}>{statusLabel[doc.data.status]}</span>
                 </h3>
-                <p>{doc.data.description}</p>
+                <p>{doc.data.summary}</p>
               </a>
             </li>
           ))
