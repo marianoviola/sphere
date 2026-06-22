@@ -41,10 +41,10 @@
     <circle cx="862" cy="340" r="1.8" opacity=".5"/>
   </g>
 
-  <!-- Wordmark -->
+  <!-- Wordmark: mark and text balanced like the site nav logo, weight 500. -->
   <g>
-    <circle cx="86" cy="556" r="13" fill="none" stroke="#f7fbff" stroke-width="2"/>
-    <ellipse cx="86" cy="556" rx="13" ry="4.4" fill="none" stroke="#78f2ff" stroke-width="1.4"/>
-    <text x="116" y="567" fill="#f7fbff" font-family="Inter Tight, Inter, system-ui, sans-serif" font-size="40" font-weight="600" letter-spacing="-1">Sphere</text>
+    <circle cx="86" cy="556" r="22" fill="none" stroke="#f7fbff" stroke-width="2"/>
+    <ellipse cx="86" cy="556" rx="22" ry="7.3" fill="none" stroke="#78f2ff" stroke-width="1.5"/>
+    <text x="132" y="569" fill="#f7fbff" font-family="Inter Tight, Inter, system-ui, sans-serif" font-size="36" font-weight="500" letter-spacing="-0.5">Sphere</text>
   </g>
 </svg>
