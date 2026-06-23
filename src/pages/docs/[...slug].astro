@@ -64,3 +64,40 @@ const statusLabel: Record<string, string> = {
     </nav>
   </main>
 </Base>
+
+<script>
+  import mermaid from "mermaid";
+
+  mermaid.initialize({
+    startOnLoad: false,
+    securityLevel: "loose",
+    fontFamily: "Inter, system-ui, sans-serif",
+    theme: "base",
+    themeVariables: {
+      darkMode: true,
+      background: "transparent",
+      primaryColor: "#0c1722",
+      primaryBorderColor: "#7f93a3",
+      primaryTextColor: "#eef4fb",
+      secondaryColor: "#0c1722",
+      tertiaryColor: "#0c1722",
+      lineColor: "#8aa0b2",
+      textColor: "#cdd9e3",
+      // Sequence diagrams
+      actorBkg: "#0c1722",
+      actorBorder: "#7f93a3",
+      actorTextColor: "#eef4fb",
+      actorLineColor: "#7f93a3",
+      signalColor: "#8aa0b2",
+      signalTextColor: "#cdd9e3",
+      noteBkgColor: "#10202e",
+      noteTextColor: "#cdd9e3",
+      noteBorderColor: "#33485a",
+    },
+  });
+
+  const nodes = document.querySelectorAll<HTMLElement>("pre.mermaid");
+  if (nodes.length) {
+    mermaid.run({ nodes });
+  }
+</script>

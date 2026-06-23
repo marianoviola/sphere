@@ -705,17 +705,20 @@ h1 {
   border-radius: 4px;
 }
 
-.doc-prose pre {
-  padding: 1.1rem 1.25rem;
-  border: 1px solid var(--faint);
-  border-radius: 8px;
+/* Code snippets: clean light card (Shiki github-light sets the background
+   inline), comfortable size and line height. Scoped to exclude Mermaid. */
+.doc-prose pre:not(.mermaid) {
+  padding: 1.2rem 1.4rem;
+  border-radius: 10px;
   overflow-x: auto;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
 }
 
 .doc-prose pre code {
   background: none;
   padding: 0;
+  font-size: 1em;
 }
 
 .doc-prose blockquote {
@@ -747,6 +750,35 @@ h1 {
 .doc-prose table {
   width: 100%;
   border-collapse: collapse;
+}
+
+/* Quiet horizontal rules: a faint hairline with generous breathing room,
+   not a heavy bar. */
+.doc-prose hr {
+  height: 0;
+  border: none;
+  border-top: 1px solid rgba(238, 247, 255, 0.08);
+  margin: clamp(2.75rem, 6vw, 4.25rem) 0;
+}
+
+/* Mermaid diagrams: transparent, centered, no code-card chrome. Hidden until
+   the runtime has rendered the SVG so the raw source never flashes. */
+.doc-prose pre.mermaid {
+  margin: 1.75rem 0 2rem;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.doc-prose pre.mermaid:not([data-processed="true"]) {
+  visibility: hidden;
+}
+
+.doc-prose pre.mermaid svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .doc-prose th,

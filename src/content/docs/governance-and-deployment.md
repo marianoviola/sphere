@@ -9,7 +9,7 @@ note: v1 deploys as a self-hosted Sphere Node on Cloudflare. The managed service
 
 # Governance and Deployment
 
-> Sphere starts with a private sandbox for preparation and testing, plus publisher-owned Sphere Nodes for real publication. The sandbox may remain private-only or evolve later, but it is not the default public hosting model.
+> In v1, preparation and validation happen locally in the Sphere plugin, and publication happens through publisher-owned Sphere Nodes. The private sandbox described below is possible future direction, not a current feature.
 
 ---
 
@@ -32,6 +32,8 @@ The publisher can prepare fragments in a private sandbox, validate them, review 
 ---
 
 ## Private Sandbox
+
+> Vision, not shipped in v1. In v1, preparation and validation run locally in the Sphere plugin; there is no hosted sandbox. The design below describes a possible future direction.
 
 The private sandbox is a controlled environment for preparing and testing fragments before publication.
 

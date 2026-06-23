@@ -26,7 +26,7 @@ Existing solutions are partial:
 
 | Solution | What it does | What it misses |
 |---|---|---|
-| Cloudflare Pay Per Crawl | Charges at the CDN edge | No content structure, no quality tiers, no attribution |
+| [Cloudflare Pay Per Crawl](https://blog.cloudflare.com/introducing-pay-per-crawl/) | Charges at the CDN edge | No content structure, no quality tiers, no attribution |
 | `robots.txt` / `llms.txt` | Signals intent | Not enforceable |
 | Paywalls | Gates access | Not designed for machine consumers |
 | Training data licensing | B2B contracts | Not real-time, not per-item |
@@ -42,7 +42,7 @@ HTTP already has everything needed to solve this:
 - **HTTP authentication** — payment challenges and credentials in standard headers
 - **HTML meta tags** — machine-readable metadata at the discovery layer
 
-The 402 status code was defined in RFC 2616 (1999) as "Payment Required" and reserved for future use. MPP / PaymentAuth gives that status code practical semantics through a `Payment` HTTP authentication scheme: the server challenges, the agent pays or authorizes payment, then retries with a payment credential or receipt.
+The 402 status code was reserved as "Payment Required" in HTTP/1.1 (RFC 2616, 1999) and is carried forward in the current HTTP semantics specification, [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110). [MPP / PaymentAuth](https://mpp.dev) gives that status code practical semantics through a `Payment` HTTP authentication scheme: the server challenges, the agent pays or authorizes payment, then retries with a payment credential or receipt.
 
 Sphere is not the payment protocol. Sphere is a structured content/access layer that can use MPP / PaymentAuth for payment, then add the content semantics that generic payment protocols do not provide: fragments, provenance, licensing, quality signals, and contributor attribution.
 
@@ -50,7 +50,7 @@ Sphere is not the payment protocol. Sphere is a structured content/access layer 
 
 ## The Public Sphere
 
-Sphere is named after the public sphere: the shared civic space where information circulates, is evaluated, cited, challenged, and turned into collective knowledge.
+Sphere is named after the public sphere, in the sense Jürgen Habermas gave it: the shared civic space where information circulates, is evaluated, cited, challenged, and turned into collective knowledge.
 
 As AI agents become intermediaries between people and published knowledge, that public sphere needs machine-readable infrastructure. Sphere treats content as something more than crawlable text: it is a fragment with provenance, policy, price, licensing, and attribution.
 
@@ -82,7 +82,7 @@ This keeps Sphere faithful to the idea of a public sphere: knowledge is not just
 
 ## Positioning
 
-**Not a CMS.** Sphere does not help publishers write or manage content. It assumes content already exists and adds a monetisation and distribution layer on top.
+**Not a CMS.** Sphere does not help publishers write or manage content. It assumes content already exists and adds a monetization and distribution layer on top.
 
 **Not a CDN.** Sphere does not serve content to humans. It serves Markdown to machines.
 
@@ -102,7 +102,7 @@ Three types of agent consumers are willing to pay for structured, licensed conte
 
 **RAG pipeline builders** need fresh, verified, structured content from specific domains. Unstructured HTML is expensive to clean. Licensed Markdown is ready to chunk and embed.
 
-**AI agents doing product research** need aggregated signals, not individual pages. A fragment with REIM scores, reliability tiers, and phase-organised reviews is worth more than the sum of individual review pages.
+**AI agents doing product research** need aggregated signals, not individual pages. A fragment with REIM scores, reliability tiers, and phase-organized reviews is worth more than the sum of individual review pages.
 
 **Enterprise AI teams** building vertical assistants need content with explicit licensing. Training on content with `llm_training: false` is a legal risk. Sphere surfaces this metadata before access.
 
@@ -110,10 +110,11 @@ Three types of agent consumers are willing to pay for structured, licensed conte
 
 ## The Revenue Model
 
-```
-Agent consumer pays  →  Sphere takes fee (20–30%)
-                   →  Remainder attributed to content contributors
-                   →  Contributors paid monthly
+```mermaid
+flowchart TD
+    A["Agent consumer pays"] --> B["Sphere takes fee (20–30%)"]
+    B --> C["Remainder attributed to content contributors"]
+    C --> D["Contributors paid monthly"]
 ```
 
 Attribution is content-quality-weighted: higher-quality content (higher Reliability Score, more verified, more cited) earns a proportionally larger share.
@@ -122,7 +123,7 @@ Attribution is content-quality-weighted: higher-quality content (higher Reliabil
 
 ## Strategic Bets
 
-1. **Machine payment protocols will become standard** as LLM agents become economically autonomous. Sphere should ride that standardisation instead of competing with it, using MPP / PaymentAuth as the primary HTTP payment layer and mapping to x402-compatible flows where useful.
+1. **Machine payment protocols will become standard** as LLM agents become economically autonomous. Sphere should ride that standardization instead of competing with it, using MPP / PaymentAuth as the primary HTTP payment layer and mapping to x402-compatible flows where useful.
 
 2. **Structured, licensed content will command a premium** over commodity web content. Publishers who structure their content early will capture disproportionate value.
 

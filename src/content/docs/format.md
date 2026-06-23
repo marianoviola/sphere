@@ -166,7 +166,7 @@ Media with no textual description is valid as preserved evidence, but weak for a
 
 ## Corpus and Series Manifests
 
-A publisher can organise fragments into a hierarchy:
+A publisher can organize fragments into a hierarchy:
 
 ```
 publisher-root/
@@ -222,7 +222,7 @@ Fragment manifests inherit corpus defaults and override only what differs.
 
 | Scenario | Policy |
 |---|---|
-| Blog post, no monetisation intent | `free` |
+| Blog post, no monetization intent | `free` |
 | Content with brand/sponsor | `sponsored` |
 | Premium content | `paid` |
 | Preview free, full paid | `metered` |

@@ -15,18 +15,19 @@ note: The shipped HTTP contract is canonical in sphere-node (spec/node-api.md). 
 
 ## Two Separate Endpoints
 
-```
-https://sphere.publisher.example/          ← discovery — HTML only, always 200
-https://content.publisher.example/
-  free/{fragment_id}.md                         ← 200, no auth, fully cacheable
-  paid/{fragment_id}.md                         ← 402 without token, 200 with token
+```mermaid
+flowchart TD
+    D["Discovery: sphere.publisher.example/ (HTML only, always 200)"]
+    C["Content: content.publisher.example/"]
+    C -->|"200, no auth, fully cacheable"| F["free/{fragment_id}.md"]
+    C -->|"402 without token, 200 with token"| P["paid/{fragment_id}.md"]
 ```
 
 These endpoints belong to a publisher-controlled Sphere Node. `sphere.pub` may maintain a registry that points agents to these URLs. A private sandbox may expose temporary test URLs, but sandbox URLs are not public publication endpoints.
 
 The separation is operational, not cosmetic:
 
-- The **discovery layer** is static HTML served from a CDN (Cloudflare Pages). Always 200. Fully cacheable. A bot can crawl the entire catalogue without paying a cent.
+- The **discovery layer** is static HTML served from a CDN (Cloudflare Pages). Always 200. Fully cacheable. A bot can crawl the entire catalog without paying a cent.
 - The **free content endpoint** is a public R2-backed path. No application logic. Zero cost to serve.
 - The **paid content endpoint** is a Worker. It validates tokens, logs events, and proxies R2. It is the only component with application logic.
 
@@ -34,13 +35,14 @@ The separation is operational, not cosmetic:
 
 ## Discovery — Corpus Entry Point
 
-```
-https://sphere.publisher.example/
-  index.html                          ← corpus catalogue
-  series-martech/
-    index.html                        ← series index
-    2026-03-27-futuro-martech/
-      index.html                      ← fragment descriptor
+```mermaid
+flowchart TD
+    root["sphere.publisher.example/"]
+    root --> ci["index.html — corpus catalog"]
+    root --> series["series-martech/"]
+    series --> si["index.html — series index"]
+    series --> frag["2026-03-27-futuro-martech/"]
+    frag --> fi["index.html — fragment descriptor"]
 ```
 
 ---

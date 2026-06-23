@@ -30,41 +30,16 @@ External references:
 
 ## Default Flow — MPP / PaymentAuth
 
-```
-1. Agent reads discovery index.html
-   → learns: policy, price, currency, payment profile, method, license
-
-2. Agent requests content
-   GET https://content.publisher.example/paid/{fragment_id}.md
-
-3. Sphere responds 402
-   HTTP/1.1 402 Payment Required
-   WWW-Authenticate: Payment id="{challenge_id}",
-     realm="publisher.example",
-     method="stripe",
-     intent="charge",
-     request="{base64url-json-payment-request}"
-
-   {
-     "error": "payment_required",
-     "fragment_id": "{fragment_id}",
-     "price": 0.003,
-     "currency": "USD",
-     "payment_profile": "mpp-paymentauth"
-   }
-
-4. Agent pays or authorizes payment using the selected MPP method
-
-5. Agent retries with a Payment credential
-   GET https://content.publisher.example/paid/{fragment_id}.md
-   Authorization: Payment id="{challenge_id}",
-     method="stripe",
-     payload="{base64url-json-payment-credential}"
-
-6. Sphere verifies the credential, logs the access, and responds 200
-   Payment-Receipt: {receipt_reference}
-   Content-Type: text/markdown; charset=utf-8
-   → full content
+```mermaid
+sequenceDiagram
+    participant A as Agent
+    participant S as Sphere Node
+    A->>A: Read discovery (policy, price, currency, profile, method, license)
+    A->>S: GET /paid/{fragment_id}.md
+    S-->>A: 402 Payment Required — WWW-Authenticate: Payment challenge
+    Note over A: Pay or authorize via the selected MPP method
+    A->>S: Retry — Authorization: Payment credential
+    S-->>A: 200 OK — Payment-Receipt + full content
 ```
 
 ---
@@ -75,13 +50,16 @@ Sphere may still expose a prepaid-token fallback for clients that cannot yet spe
 
 Fallback flow:
 
-```
-1. Agent requests paid content
-2. Sphere responds 402 with payment metadata and `payment_profile: sphere-token`
-3. Agent calls POST https://api.publisher.example/v1/pay with its consumer API key
-4. Sphere deducts prepaid balance and returns a single-use token
-5. Agent retries with `Sphere-Token: sp_tok_{uuid}`
-6. Sphere invalidates the token, logs the event, and returns content
+```mermaid
+sequenceDiagram
+    participant A as Agent
+    participant S as Sphere Node
+    A->>S: GET /paid/{fragment_id}.md
+    S-->>A: 402 — payment_profile: sphere-token
+    A->>S: POST /v1/pay (consumer API key)
+    S-->>A: Single-use token (prepaid balance deducted)
+    A->>S: Retry — Sphere-Token: sp_tok_{uuid}
+    S-->>A: Token invalidated, event logged, content returned
 ```
 
 ### Token Properties

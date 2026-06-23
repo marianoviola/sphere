@@ -19,40 +19,24 @@ The reference Sphere Node is built on Cloudflare infrastructure. A publisher dep
 
 `sphere.pub` may provide a private sandbox for draft preparation and testing. That sandbox is not the same as public fragment hosting: sandbox fragments are private, quota-limited, not monetized, not publicly registered, and exportable to a publisher-owned Sphere Node.
 
-```
-Publisher uploads/pushes content
-        ↓
-Sphere Node API (Workers)
-  → validates manifest
-  → stores to R2 (free/ and paid/)
-  → generates discovery HTML → R2 → Pages
-  → updates D1 database
-        ↓
-Agent consumer reads discovery (Pages/R2)
-        ↓
-Agent consumer requests paid content (Worker)
-  → validates token (D1)
-  → logs event (D1 append-only)
-  → proxies R2 object
-        ↓
-Monthly job
-  → reconcile events
-  → calculate payouts
-  → trigger configured payout or statement workflow
+```mermaid
+flowchart TD
+    pub["Publisher uploads / pushes content"]
+    api["Sphere Node API (Workers): validate manifest, store to R2 (free/ + paid/), generate discovery HTML to R2 / Pages, update D1"]
+    read["Agent consumer reads discovery (Pages / R2)"]
+    req["Agent consumer requests paid content (Worker): validate token (D1), log event (D1 append-only), proxy R2 object"]
+    job["Monthly job: reconcile events, calculate payouts, trigger payout / statement workflow"]
+    pub --> api --> read --> req --> job
 ```
 
 Optional sandbox flow:
 
-```
-User uploads source material
-        ↓
-Private Sphere Sandbox
-  → converts to draft fragment
-  → validates format
-  → runs rights/risk checks
-  → tests discovery and payment behavior
-        ↓
-Export to publisher-owned Sphere Node
+```mermaid
+flowchart TD
+    u["User uploads source material"]
+    sb["Private Sphere Sandbox: convert to draft fragment, validate format, run rights / risk checks, test discovery and payment behavior"]
+    ex["Export to publisher-owned Sphere Node"]
+    u --> sb --> ex
 ```
 
 ---
