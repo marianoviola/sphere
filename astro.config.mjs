@@ -1,6 +1,8 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // Turn ```mermaid fenced code blocks into <pre class="mermaid"> so the client
 // Mermaid runtime renders them, instead of letting Shiki highlight them as code.
 function remarkMermaid() {
@@ -28,9 +30,11 @@ function remarkMermaid() {
 export default defineConfig({
   site: "https://sphere.pub",
   output: "static",
+
   build: {
     format: "directory",
   },
+
   markdown: {
     // Dark theme for code snippets so the cards stay harmonious with the dark
     // page. The card background is overridden in CSS to the site panel colour.
@@ -39,4 +43,6 @@ export default defineConfig({
     },
     remarkPlugins: [remarkMermaid],
   },
+
+  adapter: cloudflare()
 });

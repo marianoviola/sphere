@@ -14,3 +14,9 @@ dist/
 
 # Local agent working notes (not site content)
 CLAUDE.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
