@@ -661,14 +661,17 @@ h1 {
   border-radius: 4px;
 }
 
-/* Code snippets: clean light card (Shiki github-light sets the background
-   inline), comfortable size and line height. Scoped to exclude Mermaid. */
+/* Code snippets: dark card harmonious with the page. Shiki sets a theme
+   background inline, so override it to the site panel colour (the !important
+   beats the inline style). Scoped to exclude Mermaid. */
 .doc-prose pre:not(.mermaid) {
   padding: 1.2rem 1.4rem;
+  border: 1px solid var(--faint);
   border-radius: 10px;
   overflow-x: auto;
   font-size: 0.95rem;
   line-height: 1.7;
+  background: var(--bg-soft) !important;
 }
 
 .doc-prose pre code {

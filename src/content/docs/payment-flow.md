@@ -34,7 +34,8 @@ External references:
 sequenceDiagram
     participant A as Agent
     participant S as Sphere Node
-    A->>A: Read discovery (policy, price, currency, profile, method, license)
+    A->>S: GET discovery index.html
+    S-->>A: 200 — policy, price, currency, payment profile, method, license
     A->>S: GET /paid/{fragment_id}.md
     S-->>A: 402 Payment Required — WWW-Authenticate: Payment challenge
     Note over A: Pay or authorize via the selected MPP method

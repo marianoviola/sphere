@@ -32,10 +32,10 @@ export default defineConfig({
     format: "directory",
   },
   markdown: {
-    // Clean light theme for code snippets; the cards read as deliberate light
-    // surfaces against the dark page.
+    // Dark theme for code snippets so the cards stay harmonious with the dark
+    // page. The card background is overridden in CSS to the site panel colour.
     shikiConfig: {
-      theme: "github-light",
+      theme: "github-dark-dimmed",
     },
     remarkPlugins: [remarkMermaid],
   },
