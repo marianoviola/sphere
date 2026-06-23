@@ -29,6 +29,8 @@ const ogImage = new URL("/assets/og-image.jpg", Astro.site ?? "https://sphere.pu
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Tints the Safari (and Chrome) toolbar to match the dark page. -->
+    <meta name="theme-color" content="#02050b" />
     <meta name="description" content={description} />
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonical} />
