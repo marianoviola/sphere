@@ -15,7 +15,13 @@ This page is the happy path, in order. Each step is shipped today.
 
 ## 1. Install the Claude plugin
 
-The [sphere-plugin](https://github.com/marianoviola/sphere-plugin) is a Claude plugin for authoring fragments. Install it, then use it to:
+The [sphere-plugin](https://github.com/marianoviola/sphere-plugin) is a local Claude desktop extension (`.mcpb`) for authoring fragments. It is an installable file:
+
+1. Download the latest bundle: **[sphere-plugin.mcpb](https://github.com/marianoviola/sphere-plugin/releases/latest/download/sphere-plugin.mcpb)** (or browse the [latest release](https://github.com/marianoviola/sphere-plugin/releases/latest) for notes and checksums).
+2. Open **Claude Desktop**, go to **Settings → Extensions**, and install the downloaded `.mcpb`.
+3. Optionally fill in the **Sphere Node URL** and **owner token** in the extension's settings to enable the read-only Node tools. Leave them blank to use only the local fragment tools.
+
+Once installed, use it to:
 
 - **Prepare** raw content into a fragment folder (manifest, `content.md`, sources, relations).
 - **Validate** the fragment against the manifest schema and content conventions.
@@ -25,9 +31,11 @@ Everything in this step happens on your machine; no fragment leaves your compute
 
 ## 2. Deploy your own Node
 
-The [sphere-node](https://github.com/marianoviola/sphere-node) repository is a reference Sphere Node that runs on Cloudflare (Workers, R2, D1, and KV). Use the **Deploy to Cloudflare** button in the repository's README to create your own instance in your own account.
+The [sphere-node](https://github.com/marianoviola/sphere-node) repository is a reference Sphere Node that runs on Cloudflare (Workers, R2, D1, and KV). It is **not** a download - it is a deploy. Use the **Deploy to Cloudflare** button to provision your own instance (a D1 database, an R2 bucket, and a KV namespace) in your own account:
 
-After it deploys, **set your owner token**. The owner token authenticates the read-only owner endpoints - it is how you, and only you, inspect what your Node is doing. Store it as a secret as described in the README; do not commit it.
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/marianoviola/sphere-node)
+
+After it deploys, **set your owner token**. The owner token authenticates the read-only owner endpoints - it is how you, and only you, inspect what your Node is doing. Store it as a secret as described in the [sphere-node README](https://github.com/marianoviola/sphere-node#readme); do not commit it.
 
 ## 3. Publish a fragment
 
