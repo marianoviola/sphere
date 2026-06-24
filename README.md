@@ -22,8 +22,6 @@ The fragment contract is canonical in `sphere-node` under `spec/`
   frontmatter (`title`, `description`, `summary`, and a `status` of `shipped`,
   `mixed`, or `vision`), which is useful metadata when generating fragments.
 - `content/notes/` — theory notes (for example, why Sphere is named Sphere).
-- `legacy/` — superseded material kept for reference, not part of the active
-  documentation.
 
 ## Workflow
 
