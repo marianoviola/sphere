@@ -1,51 +1,37 @@
-# Sphere site
+# Sphere
 
-This repository is the public Sphere website: the landing page plus the published
-documentation and theory. It is a static [Astro](https://astro.build) site and
-deploys to Cloudflare Pages.
+This repository is the **content source** for Sphere: the written documentation
+and theory, kept as plain Markdown. It is not a website and not an application —
+it is the body of writing that Mariano Viola turns into agent-readable
+**fragments** (using the Claude plugin) and publishes to a Sphere Node.
 
-This repo is the front door, not the implementation. The implementation lives in
-two separate repositories:
+The implementation lives in two separate repositories:
 
-- [sphere-node](https://github.com/marianoviola/sphere-node) - the self-hostable
-  content server on Cloudflare Workers.
-- [sphere-plugin](https://github.com/marianoviola/sphere-plugin) - the local
-  Claude desktop (MCPB) plugin for preparing and validating fragments.
+- [sphere-node](https://github.com/marianoviola/sphere-node) — the self-hostable
+  content server on Cloudflare Workers. It serves the fragment contract to
+  agents and renders a human-readable surface.
+- [sphere-plugin](https://github.com/marianoviola/sphere-plugin) — the local
+  Claude plugin for preparing and validating fragments from this content.
 
 The fragment contract is canonical in `sphere-node` under `spec/`
-(`fragment.schema.json` and `node-api.md`). This site links to it and never
-redefines it.
-
-## Develop
-
-```bash
-npm install
-npm run dev      # local dev server at http://localhost:4321
-npm run build    # static build to dist/
-npm run preview  # serve the production build locally
-```
+(`fragment.schema.json` and `node-api.md`). This repository never redefines it.
 
 ## Structure
 
-- `src/pages/` - the landing page (`index.astro`), the docs index and pages, and
-  the theory note.
-- `src/components/` - hero, nav, and footer.
-- `src/layouts/Base.astro` - shared head, fonts, and meta.
-- `src/content/docs/` - the documentation and theory, as a content collection.
-  Each document carries a `status` of `shipped`, `mixed`, or `vision` so the site
-  can frame honestly what exists today versus what is concept and direction.
-- `src/styles/global.css` - the design system (dark cosmic theme, IBM Plex Mono
-  and Source Serif 4).
-- `public/scripts/sphere-field.js` - the hero canvas animation.
-- `public/assets/` - favicon and Open Graph image.
+- `content/` — the documentation and theory, as Markdown. Each file keeps its
+  frontmatter (`title`, `description`, `summary`, and a `status` of `shipped`,
+  `mixed`, or `vision`), which is useful metadata when generating fragments.
+- `content/notes/` — theory notes (for example, why Sphere is named Sphere).
+- `legacy/` — superseded material kept for reference, not part of the active
+  documentation.
 
-## Deploy
+## Workflow
 
-The site is static. On Cloudflare Pages, set the build command to
-`npm run build` and the output directory to `dist`. No adapter or server runtime
-is required.
+The content here is the input. Fragments are generated from it with the Claude
+plugin (`sphere-plugin`), validated against the contract, and published to a
+Sphere Node (`sphere-node`) that the publisher runs themselves.
 
 ## License
 
-The site code is the author's. The documentation reflects the Sphere project by
-Mariano Viola. Sphere is an independent project.
+The documentation reflects the Sphere project by Mariano Viola. Sphere is an
+independent project.
