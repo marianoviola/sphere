@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/sphere-banner.png" alt="Sphere" width="100%">
+</p>
+
 # Sphere
 
 This repository is the **content source** for Sphere: the written documentation
