@@ -1,0 +1,31 @@
+{
+  "id": "2026-06-23-format",
+  "title": "Fragment Format",
+  "license": "CC-BY-NC",
+  "access": {
+    "policy": "free"
+  },
+  "canonical_url": "https://github.com/marianoviola/sphere/blob/main/content/format.md",
+  "sources": [
+    {
+      "kind": "text",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/format.md",
+      "label": "Original Markdown source in the Sphere content repository"
+    }
+  ],
+  "relations": [
+    {
+      "type": "extends",
+      "fragment_id": "2026-06-23-concept"
+    },
+    {
+      "type": "cites",
+      "url": "https://github.com/marianoviola/sphere-node/blob/main/spec/fragment.schema.json"
+    },
+    {
+      "type": "derived_from",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/format.md"
+    }
+  ],
+  "summary": "How a fragment is structured and where the canonical manifest schema lives."
+}

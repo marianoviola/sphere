@@ -1,13 +1,13 @@
 <p align="center">
-  <img src="assets/sphere-banner.png" alt="Sphere" width="100%">
+  <img src="assets/sphere-banner.svg" alt="Sphere" width="100%">
 </p>
 <h1 align="center">Sphere</h1>
 <p align="center">
   <strong>Agent-readable publishing, hosted by you.</strong>
 </p>
 <p align="center">
-  <a href="https://sphere.pub"><img src="https://img.shields.io/badge/live-sphere.pub-0B0E12?style=for-the-badge" alt="Live"></a>
-  <a href="https://github.com/marianoviola/sphere-node"><img src="https://img.shields.io/badge/node-self--host-FF4A1C?style=for-the-badge" alt="Self-host the node"></a>
+  <a href="https://sphere.pub"><img src="https://img.shields.io/badge/live-sphere.pub-1b1712?style=for-the-badge" alt="Live"></a>
+  <a href="https://github.com/marianoviola/sphere-node"><img src="https://img.shields.io/badge/node-self--host-8a5a7d?style=for-the-badge" alt="Self-host the node"></a>
   <a href="https://github.com/marianoviola/sphere-plugin"><img src="https://img.shields.io/badge/plugin-Claude-EAE6DD?style=for-the-badge" alt="Claude plugin"></a>
   <img src="https://img.shields.io/badge/content-CC%20BY--NC-888888?style=for-the-badge" alt="Content license">
 </p>

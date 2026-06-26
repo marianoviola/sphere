@@ -1,0 +1,35 @@
+{
+  "id": "2026-06-23-payment-flow",
+  "title": "Payment Flow",
+  "license": "CC-BY-NC",
+  "access": {
+    "policy": "free"
+  },
+  "canonical_url": "https://github.com/marianoviola/sphere/blob/main/content/payment-flow.md",
+  "sources": [
+    {
+      "kind": "text",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/payment-flow.md",
+      "label": "Original Markdown source in the Sphere content repository"
+    }
+  ],
+  "relations": [
+    {
+      "type": "extends",
+      "fragment_id": "2026-06-23-http-layer"
+    },
+    {
+      "type": "cites",
+      "url": "https://mpp.dev"
+    },
+    {
+      "type": "cites",
+      "url": "https://paymentauth.org"
+    },
+    {
+      "type": "derived_from",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/payment-flow.md"
+    }
+  ],
+  "summary": "The intended 402 payment challenge, token fallback, and x402 compatibility."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-06-24-public-sphere",
+  "title": "Why Sphere is called Sphere",
+  "license": "CC-BY-NC",
+  "access": {
+    "policy": "free"
+  },
+  "canonical_url": "https://github.com/marianoviola/sphere/blob/main/content/notes/public-sphere.md",
+  "sources": [
+    {
+      "kind": "text",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/notes/public-sphere.md",
+      "label": "Original Markdown source in the Sphere content repository"
+    }
+  ],
+  "relations": [
+    {
+      "type": "supports",
+      "fragment_id": "2026-06-23-concept"
+    },
+    {
+      "type": "derived_from",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/notes/public-sphere.md"
+    }
+  ],
+  "summary": "Why Sphere is named after the public sphere, and how Habermas and Benjamin shape its form."
+}

@@ -1,0 +1,31 @@
+{
+  "id": "2026-06-22-monetization",
+  "title": "Monetization",
+  "license": "CC-BY-NC",
+  "access": {
+    "policy": "free"
+  },
+  "canonical_url": "https://github.com/marianoviola/sphere/blob/main/content/monetization.md",
+  "sources": [
+    {
+      "kind": "text",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/monetization.md",
+      "label": "Original Markdown source in the Sphere content repository"
+    }
+  ],
+  "relations": [
+    {
+      "type": "cites",
+      "fragment_id": "2026-06-22-publisher-intelligence"
+    },
+    {
+      "type": "extends",
+      "fragment_id": "2026-06-23-payment-flow"
+    },
+    {
+      "type": "derived_from",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/monetization.md"
+    }
+  ],
+  "summary": "The intended revenue model, pricing, payout, and contributor attribution."
+}

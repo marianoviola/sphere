@@ -1,0 +1,27 @@
+{
+  "id": "2026-06-23-http-layer",
+  "title": "HTTP Layer",
+  "license": "CC-BY-NC",
+  "access": {
+    "policy": "free"
+  },
+  "canonical_url": "https://github.com/marianoviola/sphere/blob/main/content/http-layer.md",
+  "sources": [
+    {
+      "kind": "text",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/http-layer.md",
+      "label": "Original Markdown source in the Sphere content repository"
+    }
+  ],
+  "relations": [
+    {
+      "type": "extends",
+      "fragment_id": "2026-06-23-concept"
+    },
+    {
+      "type": "derived_from",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/http-layer.md"
+    }
+  ],
+  "summary": "Discovery and content endpoints, status codes, metadata, and caching."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-06-23-infrastructure",
+  "title": "Infrastructure",
+  "license": "CC-BY-NC",
+  "access": {
+    "policy": "free"
+  },
+  "canonical_url": "https://github.com/marianoviola/sphere/blob/main/content/infrastructure.md",
+  "sources": [
+    {
+      "kind": "text",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/infrastructure.md",
+      "label": "Original Markdown source in the Sphere content repository"
+    }
+  ],
+  "relations": [
+    {
+      "type": "extends",
+      "fragment_id": "2026-06-23-http-layer"
+    },
+    {
+      "type": "derived_from",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/infrastructure.md"
+    }
+  ],
+  "summary": "The Cloudflare stack behind a Sphere Node: Workers, R2, D1, and KV."
+}

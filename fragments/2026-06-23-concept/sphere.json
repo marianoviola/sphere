@@ -1,0 +1,35 @@
+{
+  "id": "2026-06-23-concept",
+  "title": "Concept",
+  "license": "CC-BY-NC",
+  "access": {
+    "policy": "free"
+  },
+  "canonical_url": "https://github.com/marianoviola/sphere/blob/main/content/concept.md",
+  "sources": [
+    {
+      "kind": "text",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/concept.md",
+      "label": "Original Markdown source in the Sphere content repository"
+    }
+  ],
+  "relations": [
+    {
+      "type": "extends",
+      "fragment_id": "2026-06-24-public-sphere"
+    },
+    {
+      "type": "cites",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110"
+    },
+    {
+      "type": "cites",
+      "url": "https://mpp.dev"
+    },
+    {
+      "type": "derived_from",
+      "url": "https://github.com/marianoviola/sphere/blob/main/content/concept.md"
+    }
+  ],
+  "summary": "Why Sphere exists, fragments as relational units, and the long-term vision."
+}
