@@ -3,6 +3,15 @@ title: Why Sphere is called Sphere
 description: A short note on Habermas, Benjamin, fragments, constellations, and agent-readable public knowledge.
 summary: Why Sphere is named after the public sphere, and how Habermas and Benjamin shape its form.
 status: note
+sources:
+  - type: book
+    title: The Structural Transformation of the Public Sphere
+    author: Jürgen Habermas
+    date: "1962"
+  - type: book
+    title: The Arcades Project
+    author: Walter Benjamin
+    date: "1982"
 ---
 
 # Why Sphere is called Sphere

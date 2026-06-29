@@ -40,8 +40,22 @@ The fragment contract is canonical in `sphere-node` under `spec/` (`fragment.sch
 
 ## Structure
 
-- `content/` is the documentation and theory, as Markdown. Each file keeps its frontmatter (`title`, `description`, `summary`, and a `status` of `shipped`, `mixed`, or `vision`), useful metadata when generating fragments.
+- `content/` is the documentation and theory, as Markdown. Each file keeps its frontmatter (`title`, `description`, `summary`, a `status` of `shipped`, `mixed`, or `vision`, and an optional `sources` list), useful metadata when generating fragments.
 - `content/notes/` holds theory notes, for example why Sphere is named Sphere.
+
+### Sources: typed external provenance
+
+A content file may declare `sources` in its frontmatter: the external works it draws on. Provenance is legitimacy, so it is part of the fragment contract — the plugin copies it through to the fragment `sphere.json`, and the node renders it. It lives in the source frontmatter so it survives regeneration. Each entry has a `type` (`book`, `article`, `paper`, `video`, `webpage`, `dataset`, or `other`) and a `title`, with optional `author`, `url`, `date`, and `note`:
+
+```yaml
+sources:
+  - type: book
+    title: The Structural Transformation of the Public Sphere
+    author: Jürgen Habermas
+    date: "1962"
+```
+
+`sources` is EXTERNAL provenance only — not the internal document a fragment was generated from (that build lineage is captured by `canonical_url`, not the contract). Original, node-native content simply has no `sources`. The canonical schema lives in [`sphere-node/spec/fragment.schema.json`](https://github.com/marianoviola/sphere-node/blob/main/spec/fragment.schema.json); this repo never redefines it.
 
 ## Workflow
 
