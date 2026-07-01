@@ -5,6 +5,16 @@ summary: The intended 402 payment challenge, token fallback, and x402 compatibil
 status: vision
 order: 5
 note: Sphere does not process payments in v1. The Node returns a 402 payment challenge but does not verify it. The flows below describe intended future behavior.
+sources:
+  - type: webpage
+    title: MPP / PaymentAuth
+    url: https://mpp.dev
+  - type: webpage
+    title: PaymentAuth specifications
+    url: https://paymentauth.org
+relations:
+  - type: extends
+    target: 2026-06-23-http-layer
 ---
 
 # Payment Flow

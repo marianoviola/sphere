@@ -12,6 +12,9 @@ sources:
     title: The Arcades Project
     author: Walter Benjamin
     date: "1982"
+relations:
+  - type: supports
+    target: 2026-06-23-concept
 ---
 
 # Why Sphere is called Sphere

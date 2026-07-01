@@ -5,6 +5,13 @@ summary: Why Sphere exists, fragments as relational units, and the long-term vis
 status: vision
 order: 2
 note: This document describes the concept and direction behind Sphere, including a future revenue model. It is not a description of shipped v1 features.
+sources:
+  - type: paper
+    title: "RFC 9110: HTTP Semantics"
+    url: https://www.rfc-editor.org/rfc/rfc9110
+  - type: webpage
+    title: MPP / PaymentAuth
+    url: https://mpp.dev
 ---
 
 # Concept

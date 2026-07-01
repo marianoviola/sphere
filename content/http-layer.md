@@ -5,6 +5,9 @@ summary: Discovery and content endpoints, status codes, metadata, and caching.
 status: mixed
 order: 4
 note: The shipped HTTP contract is canonical in sphere-node (spec/node-api.md). Parts of this document describe intended behavior beyond v1.
+relations:
+  - type: extends
+    target: 2026-06-23-concept
 ---
 
 # HTTP Layer

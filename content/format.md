@@ -5,6 +5,13 @@ summary: How a fragment is structured and where the canonical manifest schema li
 status: mixed
 order: 3
 note: The fragment manifest is defined canonically in the sphere-node repo (spec/fragment.schema.json); this document points to it rather than restating it. Other parts describe conventions and future hierarchy concepts.
+sources:
+  - type: webpage
+    title: Sphere fragment manifest schema (sphere-node spec)
+    url: https://github.com/marianoviola/sphere-node/blob/main/spec/fragment.schema.json
+relations:
+  - type: extends
+    target: 2026-06-23-concept
 ---
 
 # Fragment Format

@@ -57,6 +57,20 @@ sources:
 
 `sources` is EXTERNAL provenance only — not the internal document a fragment was generated from (that build lineage is captured by `canonical_url`, not the contract). Original, node-native content simply has no `sources`. The canonical schema lives in [`sphere-node/spec/fragment.schema.json`](https://github.com/marianoviola/sphere-node/blob/main/spec/fragment.schema.json); this repo never redefines it.
 
+### Relations: typed edges between fragments
+
+A content file may declare `relations` in its frontmatter: the typed edges from this fragment to others. Like `sources`, relations live in the source frontmatter so they survive regeneration — the plugin copies them through to the fragment `sphere.json` unchanged, and the node validates and serves them. Each edge has a `type` (a short, open relation kind — `related`, `continues`, `cites`, `responds-to`, …; not enumerated) and a `target`:
+
+```yaml
+relations:
+  - type: continues
+    target: 2026-06-23-concept                              # same-node: a bare fragment id
+  - type: cites
+    target: https://other.node/fragments/2026-01-10-source # external: an absolute canonical fragment URL
+```
+
+`target` is a **canonical fragment reference**, the one scheme used everywhere a fragment is named: either a same-node fragment `id` (`yyyy-mm-dd-slug`) or an absolute URL to another node's canonical fragment (`{node_base}/fragments/{id}`). A relation always points at a *fragment* — it is not the place for external citations (those are `sources`) or for the document a fragment was generated from (that is `canonical_url`). The reference scheme is defined in [`sphere-node/spec/node-api.md`](https://github.com/marianoviola/sphere-node/blob/main/spec/node-api.md).
+
 ## Workflow
 
 The content here is the input. Fragments are generated from it with the Claude plugin, validated against the contract, and published to a Sphere Node that the publisher runs themselves. Updating a fragment is republishing it; the node is the home of what is served.

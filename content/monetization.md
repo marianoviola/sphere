@@ -5,6 +5,9 @@ summary: The intended revenue model, pricing, payout, and contributor attributio
 status: vision
 order: 9
 note: Monetization is not live in v1. This document describes the intended revenue model and direction, not current functionality.
+relations:
+  - type: extends
+    target: 2026-06-23-payment-flow
 ---
 
 # Monetization
