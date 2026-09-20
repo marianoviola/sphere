@@ -32,9 +32,10 @@ flowchart LR
 
 | Repository | Role |
 |---|---|
-| **sphere** (this repo) | The Markdown content that fragments are made from. |
-| [**sphere-node**](https://github.com/marianoviola/sphere-node) | The self-hostable server on Cloudflare Workers. Serves the fragment contract to agents and renders a human-readable surface. One-click deploy. |
-| [**sphere-plugin**](https://github.com/marianoviola/sphere-plugin) | The local Claude plugin that prepares and validates fragments from this content. |
+| **sphere** (this repo) | The Markdown content that fragments are made from, and the index of the project. |
+| [**sphere-node**](https://github.com/marianoviola/sphere-node) | The self-hostable server on Cloudflare Workers, as a one-click deploy and as the `@sphere-pub/node` npm package. Serves the fragment contract to agents and renders a human-readable surface. |
+| [**sphere-plugin**](https://github.com/marianoviola/sphere-plugin) | The local Claude plugin that prepares, validates, and publishes fragments from this content. |
+| [**sphere-pub**](https://github.com/marianoviola/sphere-pub) | The project site, [sphere.pub](https://sphere.pub): a three-file instance of `@sphere-pub/node` that publishes this content. |
 
 The fragment contract is canonical in `sphere-node` under `spec/` (`fragment.schema.json` and `node-api.md`). This repository never redefines it.
 
@@ -88,7 +89,7 @@ The concept docs are the best way in:
 
 ## See it live
 
-The reference node serves this project's own fragments at **[sphere.pub](https://sphere.pub)**: a human index in the browser, and the fragment contract for agents at `/.well-known/sphere.json`. Sphere publishes itself.
+The project site, **[sphere.pub](https://sphere.pub)**, is a Sphere Node built from the `@sphere-pub/node` package ([sphere-pub](https://github.com/marianoviola/sphere-pub)) and serves this repository's fragments: a human index in the browser, and the fragment contract for agents at `/.well-known/sphere.json`. Sphere publishes itself.
 
 ## License
 
